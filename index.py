@@ -19,7 +19,7 @@ def serve_pil_image(pil_img):
 
 @app.route("/")
 def hello():
-    return "Hello Worflflld!"
+    return "Hello Worflflld! fuck the hell"
 
 @app.route('/qrcode', methods=['GET'])
 def qrcodeprocess():
@@ -52,14 +52,27 @@ def saveLENData():
 	ap_id = content['ap_id']
 	rssi = content['rssi']
 	cur = mysql.connection.cursor()
-	#print content['ap_id']
 	query = "INSERT INTO rssi_data (venue_id,ap_id,rssi,phone_mac) VALUES ('"+venue_id+"','"+ap_id+"','"+rssi+"','"+phone_mac+"')"
 	print (query)
-	#query = "INSERT INTO rssi_data (venue_id,ap_id,rssi,phone_mac) VALUES ('" + venue_id + "','" + ap_id + "','" + rssi + "','" + phone_mac + "')"
-	#app.logger.info(query)
 	cur.execute(query)
 	mysql.connection.commit()
 	return "done"
+
+@app.route('/LENdataForSync', methods=['POST'])
+def saveLENDataForSync():
+	content = request.get_json(silent=True)
+	print content['venue_id']
+	venue_id = content['venue_id']
+	phone_mac = content['phone_mac']
+	ap_id = content['ap_id']
+	rssi = content['rssi']
+	cur = mysql.connection.cursor()
+	query = "INSERT INTO rssi_data_for_sync (venue_id,ap_id,rssi,phone_mac) VALUES ('"+venue_id+"','"+ap_id+"','"+rssi+"','"+phone_mac+"')"
+	print (query)
+	cur.execute(query)
+	mysql.connection.commit()
+	return "done"
+
 
 if __name__ == "__main__":
 	app.debug = True

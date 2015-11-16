@@ -3,6 +3,7 @@ from flask import request
 from flask.ext.mysqldb import MySQL
 import json
 from flask import send_file
+from random import randint
 
 app = Flask(__name__)
 app.config['MYSQL_USER'] = 'root'
@@ -71,8 +72,16 @@ def saveLENDataForSync():
 	print (query)
 	cur.execute(query)
 	mysql.connection.commit()
-	return "done"
+	return json.dumps("done")
 
+@app.route('/GetLocation', methods=['GET'])
+def getlocation():
+	content = request.get_json(silent=True)
+	data = {}
+	data['x'] = randint(1,50)
+	data['y'] = randint(1,50)
+	json_data = json.dumps(data)
+	return json_data
 
 if __name__ == "__main__":
 	app.debug = True

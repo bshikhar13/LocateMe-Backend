@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+import os
 #from flask.ext.mysqldb import MySQL
 import json
 from flask import send_file
@@ -17,12 +18,12 @@ app = Flask(__name__)
 # app.config['MYSQL_HOST'] = 'localhost'
 #mysql = MySQL(app)
 
-Global_k = 10
+Global_k = 5
 
 def finalValue(Xn,xn):
 	sigma = mt.sqrt(0.5*(pow((Xn-xn),2)))
 	sigma_square =0.5 *(pow((Xn-xn),2))
-	sign = lambda x: (1,-1) [x<0]
+	sign = lambda x: (1,-1) [x>0]
 	print str(sign(Xn-xn)) + " : " + str(sigma) + " : " + str(sigma_square)
 	Xf = Xn + ((sign(Xn-xn)) * sigma * 1)
 	return Xf
@@ -86,7 +87,7 @@ def qrcodeprocess():
 
 @app.route('/getimage/<mapid>', methods=['GET'])
 def imagesending(mapid):
-	return send_file('static/img/venues/'+mapid)
+	return send_file('C:/xampp/htdocs/LEN-Admin/static/img/venues/'+mapid)
 
 
 @app.route('/LENdata' , methods=['POST'])

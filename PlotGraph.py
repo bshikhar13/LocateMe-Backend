@@ -29,7 +29,7 @@ def plotGraph():
 	pp.xlabel('Time')
 	pp.ylabel('RSSI Value')
 
-	ttl = pp.title('Time vs Raw RSSI | Filtered RSSI : k = 5')
+	ttl = pp.title('Time vs Raw RSSI | Filtered RSSI : k = 2')
 	pp.plot(t,raw_rssi,'r--',label="Raw RSSI")
 	pp.plot(t,filtered_rssi,'g-',label='Filtered RSSI')
 	#pp.plot(t,predicted_rssi,'b--',label='Predicted RSSI')

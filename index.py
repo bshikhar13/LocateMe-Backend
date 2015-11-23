@@ -243,6 +243,11 @@ def getlocation():
 	phone_mac = content['phone_mac']
 	data = {}
 	data['x'], data['y'] = calculatePosition(venue_id,phone_mac)
+	Xlocation = data['x']
+	Ylocation = data['y']
+	sql = "INSERT INTO location_data (time,phone_mac,venue_id,x,y) VALUES ('"+str(datetime.datetime.now())+"','"+str(phone_mac) + "','"+str(venue_id) + str(Xlocation) + "','" + str(Ylocation) + "')"
+	cur.execute(sql)
+	cur.connection.commit()
 	#data['x'] = randint(100,500)
 	#data['y'] = randint(100,500)
 	json_data = json.dumps(data)

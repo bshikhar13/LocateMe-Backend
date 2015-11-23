@@ -7,31 +7,27 @@ from matplotlib.legend_handler import HandlerLine2D
 #sns.set(color_codes=True)
 
 import MySQLdb
-Con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="root", passwd="", db="locateme")
+Con = MySQLdb.Connect(host="127.0.0.1", port=3306, user="root", passwd="", db="len")
 
 
 def plotGraph():
 	raw_rssi = []
-	filtered_rssi = []
-	predicted_rssi = []
-
 	Cursor = Con.cursor()
-	sql = "SELECT * FROM temporary_for_graph_table LIMIT 50"
+	#sql = "SELECT * FROM rssi_data_collect WHERE `ssid0` = 'LOCATEME-SS3'"
+	sql = "SELECT * FROM rssi_data_collect"
 	Cursor.execute(sql)
 	rev = Cursor.fetchall()
 	for i in rev:
-		raw_rssi.append(i[1])
-		predicted_rssi.append(i[2])
-		filtered_rssi.append(i[3])
-		print i[1] + " : " + i[2]
+		if i[0] == 'LOCATEME-SS1':
+			raw_rssi.append(i[1])
+		
 	length = len(raw_rssi)
 	t = np.arange(0, length, 1)
 	pp.xlabel('Time')
 	pp.ylabel('RSSI Value')
 
-	ttl = pp.title('Time vs Raw RSSI | Filtered RSSI : k = 2')
+	ttl = pp.title('LOCATEME-SS3')
 	pp.plot(t,raw_rssi,'r--',label="Raw RSSI")
-	pp.plot(t,filtered_rssi,'g-',label='Filtered RSSI')
 	#pp.plot(t,predicted_rssi,'b--',label='Predicted RSSI')
 
 	pp.legend(loc='upper right', frameon=False)
